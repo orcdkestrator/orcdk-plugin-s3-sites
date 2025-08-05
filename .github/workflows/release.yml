@@ -10,17 +10,21 @@ permissions:
   packages: write
 
 jobs:
-  # CRITICAL: Run CI checks first to ensure quality (simplified for release)
-  ci:
+  # Run full CI matrix first
+  test:
     runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
     
     steps:
     - uses: actions/checkout@v4
     
-    - name: Setup Node.js
+    - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
-        node-version: '20.x'
+        node-version: ${{ matrix.node-version }}
         cache: 'npm'
     
     - name: Install dependencies
@@ -39,7 +43,7 @@ jobs:
       run: npm run build
   
   release:
-    needs: ci  # CRITICAL: Only run release if CI passes - prevents releasing broken code
+    needs: test  # Wait for ALL test jobs (both Node versions) to complete
     runs-on: ubuntu-latest
     
     steps:
