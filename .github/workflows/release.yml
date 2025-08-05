@@ -1,53 +1,25 @@
 name: Release
 
 on:
-  push:
-    tags:
-      - 'v*'
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
 
 permissions:
   contents: write
   packages: write
 
 jobs:
-  # Run full CI matrix first
-  test:
-    runs-on: ubuntu-latest
-    
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x]
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    
-    - name: Install dependencies
-      run: npm ci
-    
-    - name: Install peer dependencies
-      run: npm install @orcdkestrator/core@latest --no-save
-    
-    - name: Run linter
-      run: npm run lint
-    
-    - name: Run tests
-      run: npm run test:coverage
-    
-    - name: Build
-      run: npm run build
-  
   release:
-    needs: test  # Wait for ALL test jobs (both Node versions) to complete
+    # Only run release if CI workflow completed successfully on a tag push
+    if: ${{ github.event.workflow_run.conclusion == 'success' && startsWith(github.event.workflow_run.head_branch, 'v') }}
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.workflow_run.head_branch }}
     
     - name: Setup Node.js
       uses: actions/setup-node@v4
@@ -69,6 +41,7 @@ jobs:
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: ${{ github.event.workflow_run.head_branch }}
         generate_release_notes: true
         files: |
           README.md
