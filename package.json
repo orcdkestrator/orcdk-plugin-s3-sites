@@ -1,0 +1,59 @@
+{
+  "name": "@orcdkestrator/orcdk-plugin-s3-sites",
+  "version": "1.0.0",
+  "description": "S3 static site deployment plugin with CloudFront integration for Orcdkestrator",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rimraf dist",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src/**/*.ts",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "orcdkestrator",
+    "plugin",
+    "s3", "cloudfront", "static-site", "deployment", "orchestration"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orcdkestrator/orcdk-plugin-s3-sites.git"
+  },
+  "bugs": {
+    "url": "https://github.com/orcdkestrator/orcdk-plugin-s3-sites/issues"
+  },
+  "homepage": "https://github.com/orcdkestrator/orcdk-plugin-s3-sites#readme",
+  "license": "MIT",
+  "dependencies": {
+    "@aws-sdk/client-cloudfront": "^3.0.0",
+    "@aws-sdk/client-s3": "^3.0.0",
+    "glob": "^11.0.3",
+    "mime-types": "^2.1.35",
+    "@orcdkestrator/core": "^1.0.0"
+  },
+  "peerDependencies": {
+    "@orcdkestrator/core": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.0.0",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^29.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
