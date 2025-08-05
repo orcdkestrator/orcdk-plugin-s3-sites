@@ -3,7 +3,7 @@ import { Plugin, PluginConfig, OrcdkConfig, EventBus, EventTypes } from '@orcdke
 import * as fs from 'fs';
 import * as path from 'path';
 import { S3SitePatternDetector } from './pattern-detector';
-import { StackInspector } from '../serverless/stack-inspector';
+import { StackInspector } from './stack-inspector';
 import { S3SiteConfig, S3Site, S3SiteDeploymentOptions, S3SiteRequirements, S3DeploymentResult } from './types';
 import { S3Uploader } from './s3-uploader';
 import { CloudFrontInvalidator } from './cloudfront-invalidator';
