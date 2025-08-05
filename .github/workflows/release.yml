@@ -10,14 +10,43 @@ permissions:
   packages: write
 
 jobs:
-  release:
+  # Run CI checks first to ensure quality - simplified for release workflow
+  ci:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install peer dependencies
+      run: npm install @orcdkestrator/core@latest --no-save
+    
+    - name: Run linter
+      run: npm run lint
+    
+    - name: Run tests
+      run: npm run test:coverage
+    
+    - name: Build
+      run: npm run build
+  
+  release:
+    needs: ci  # Only run release if CI passes
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
         node-version: '20.x'
         registry-url: 'https://registry.npmjs.org'
@@ -25,10 +54,7 @@ jobs:
     - name: Install dependencies
       run: npm ci
     
-    - name: Run tests
-      run: npm test
-    
-    - name: Build
+    - name: Build for release
       run: npm run build
     
     - name: Publish to NPM

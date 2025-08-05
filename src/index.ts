@@ -8,16 +8,14 @@ import { S3SiteConfig, S3Site, S3SiteDeploymentOptions, S3SiteRequirements, S3De
 import { S3Uploader } from './s3-uploader';
 import { CloudFrontInvalidator } from './cloudfront-invalidator';
 
-// Version will be loaded asynchronously
-let pluginVersion = '1.0.0';
 
 /**
  * S3 Sites plugin for orcdkestrator
  * Enables deployment of static sites to S3 with CloudFront integration
  */
 export class S3SitesPlugin implements Plugin {
-  public readonly name = '@orcdkestrator/s3-sites';
-  public readonly version = pluginVersion;
+  public readonly name = '@orcdkestrator/orcdk-plugin-s3-sites';
+  public readonly version = '1.0.0';
   
   private config: S3SiteConfig = {};
   private orcdkConfig: OrcdkConfig | null = null;
@@ -32,15 +30,6 @@ export class S3SitesPlugin implements Plugin {
     this.orcdkConfig = orcdkConfig;
     this.eventBus = EventBus.getInstance();
     
-    // Load version asynchronously
-    try {
-      const packageJsonPath = path.join(__dirname, '../..', 'package.json');
-      const packageContent = await fs.promises.readFile(packageJsonPath, 'utf-8');
-      const packageJson = JSON.parse(packageContent);
-      pluginVersion = packageJson.version;
-    } catch {
-      // Keep default version if loading fails
-    }
     
     // Initialize components
     this.patternDetector = new S3SitePatternDetector(process.cwd());

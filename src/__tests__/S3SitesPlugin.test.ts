@@ -7,6 +7,6 @@ describe('S3SitesPlugin', () => {
 
   it('should have correct name', () => {
     const plugin = new S3SitesPlugin();
-    expect(plugin.name).toBe('s3-sites');
+    expect(plugin.name).toBe('@orcdkestrator/orcdk-plugin-s3-sites');
   });
 });

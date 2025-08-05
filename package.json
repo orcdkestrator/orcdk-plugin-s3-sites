@@ -15,7 +15,7 @@
     "clean": "rimraf dist",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint 'src/**/*.ts'",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [
@@ -40,11 +40,10 @@
     "@aws-sdk/client-cloudfront": "^3.0.0",
     "@aws-sdk/client-s3": "^3.0.0",
     "glob": "^11.0.3",
-    "mime-types": "^2.1.35",
-    "@orcdkestrator/core": "^1.0.0"
+    "mime-types": "^2.1.35"
   },
   "peerDependencies": {
-    "@orcdkestrator/core": "^1.0.0"
+    "@orcdkestrator/core": "^1.0.2"
   },
   "devDependencies": {
     "@types/jest": "^29.0.0",
