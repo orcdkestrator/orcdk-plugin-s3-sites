@@ -10,7 +10,7 @@ permissions:
   packages: write
 
 jobs:
-  # Run CI checks first to ensure quality - simplified for release workflow
+  # CRITICAL: Run CI checks first to ensure quality (simplified for release)
   ci:
     runs-on: ubuntu-latest
     
