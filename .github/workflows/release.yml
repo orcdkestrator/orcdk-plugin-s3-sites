@@ -39,7 +39,7 @@ jobs:
       run: npm run build
   
   release:
-    needs: ci  # Only run release if CI passes
+    needs: ci  # CRITICAL: Only run release if CI passes - prevents releasing broken code
     runs-on: ubuntu-latest
     
     steps:
