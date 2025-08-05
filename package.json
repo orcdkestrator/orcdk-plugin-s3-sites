@@ -15,13 +15,17 @@
     "clean": "rimraf dist",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "lint": "eslint src/**/*.ts",
+    "lint": "eslint src --ext .ts",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "keywords": [
     "orcdkestrator",
     "plugin",
-    "s3", "cloudfront", "static-site", "deployment", "orchestration"
+    "s3",
+    "cloudfront",
+    "static-site",
+    "deployment",
+    "orchestration"
   ],
   "repository": {
     "type": "git",
